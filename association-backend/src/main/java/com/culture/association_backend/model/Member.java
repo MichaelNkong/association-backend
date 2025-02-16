@@ -1,4 +1,4 @@
-
+package com.culture.association_backend.model;
 
 import jakarta.persistence.*;
 
