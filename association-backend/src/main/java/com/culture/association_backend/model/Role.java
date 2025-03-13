@@ -1,7 +1,11 @@
 package com.culture.association_backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "roles")
@@ -15,4 +19,11 @@ public class Role {
 
     @Column(unique = true, nullable = false)
     private String name; // Example: "ROLE_USER", "ROLE_ADMIN"
+
+    @ManyToMany(mappedBy = "roles")
+    @JsonIgnore // Prevents recursion when serializing JSON
+    private Set<User> users = new HashSet<>();
+
+
 }
+

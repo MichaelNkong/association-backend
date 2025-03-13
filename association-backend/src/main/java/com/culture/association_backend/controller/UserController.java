@@ -11,12 +11,12 @@ import java.lang.reflect.Member;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api")
 public class UserController {
 
     @Autowired
     private UserService userService;
-    @GetMapping
+    @GetMapping("/users")
     public ResponseEntity<List<User>> getAllUsers() {
         List<User> users = userService.getAllusers();
         return ResponseEntity.ok(users); // Should return a JSON response by default

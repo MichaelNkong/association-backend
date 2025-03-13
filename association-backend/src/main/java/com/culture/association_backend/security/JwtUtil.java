@@ -14,7 +14,7 @@ import java.util.function.Function;
 @Component
 public class JwtUtil {
 
-    private static final String SECRET_KEY = "your-very-secret-key-that-should-be-256-bit"; // Replace with a strong key
+    private static final String SECRET_KEY = "SG9Nb1plYTQ3MjIlP0hvTW9aZWE0NzIyJT9Ib01vWmVhNDcyMiU/"; // Replace with a strong key
 
     private Key getSigningKey() {
         byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
@@ -25,13 +25,14 @@ public class JwtUtil {
         return Jwts.builder()
                 .subject(username)
                 .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60)) // 1-hour validity
+                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 *3)) // 1-hour validity
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
+
     }
 
     public Date extractExpiration(String token) {
