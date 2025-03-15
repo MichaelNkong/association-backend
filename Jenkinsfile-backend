@@ -4,7 +4,7 @@ tools {
     git 'Default'
 }
     environment {
-        DOCKER_HUB_USER = "MichaelNkong"
+        DOCKER_HUB_USER = "michaelnkong"
         DOCKER_HUB_PASS = "HoMoZea4722%?"
         RENDER_API_KEY = "your-render-api-key"
         BACKEND_DEPLOY_HOOK = "https://api.render.com/deploy/srv-backend-id"
@@ -25,22 +25,27 @@ tools {
                         }
                     }
                 }
-        stage('Build Backend Image') {
-            steps {
-                script {
-                    sh "docker build -t ${DOCKER_HUB_USER}/cultural-association-backend:latest"
-                }
-            }
-        }
+       stage('Build Backend') {
+                  steps {
+                      sh "mvn clean package -DskipTests"
+                  }
+              }
 
-        stage('Push Backend Image to Docker Hub') {
-            steps {
-                script {
-                    sh "echo ${DOCKER_HUB_PASS} | docker login -u ${DOCKER_HUB_USER} --password-stdin"
-                    sh "docker push ${DOCKER_HUB_USER}/cultural-association-backend:latest"
+              stage('Build Docker Image') {
+                  steps {
+                      sh "docker build -t ${DOCKER_HUB_USER}/cultural-association-backend:latest ."
+                  }
+              }
+
+
+        stage('Push Docker Image') {
+                    steps {
+                        script {
+                            sh "echo ${DOCKER_HUB_PASS} | docker login -u ${DOCKER_HUB_USER} --password-stdin"
+                            sh "docker push ${DOCKER_HUB_USER}/cultural-association-backend:latest"
+                        }
+                    }
                 }
-            }
-        }
 
 
     }
