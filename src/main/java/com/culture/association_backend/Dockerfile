@@ -1,18 +1,18 @@
-# Use official Maven image to build the application
+# Stage 1: Build the JAR file
 FROM maven:3.9.6-eclipse-temurin-21 AS builder
 WORKDIR /app
 
 # Copy the project source code
 COPY . .
 
-# Build the application (creates target/*.jar)
+# Build the Spring Boot application (creates target/*.jar)
 RUN mvn clean package -DskipTests
 
-# Use lightweight OpenJDK 21 image for running the app
+# Stage 2: Run the application using OpenJDK 21
 FROM openjdk:21
 WORKDIR /app
 
-# Copy built JAR from the builder stage
+# Copy the built JAR from the builder stage
 COPY --from=builder /app/target/*.jar app.jar
 
 # Expose the default Spring Boot port
