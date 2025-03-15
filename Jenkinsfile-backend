@@ -28,7 +28,7 @@ tools {
         stage('Build Backend Image') {
             steps {
                 script {
-                    sh "docker build -t ${DOCKER_HUB_USER}/my-backend:latest ."
+                    sh "docker build -t ${DOCKER_HUB_USER}/cultural-association-backend:latest"
                 }
             }
         }
