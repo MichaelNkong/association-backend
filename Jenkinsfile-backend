@@ -1,6 +1,8 @@
 pipeline {
     agent any
-
+tools {
+    git 'Default'
+}
     environment {
         DOCKER_HUB_USER = "your-dockerhub-username"
         DOCKER_HUB_PASS = "your-dockerhub-password"
