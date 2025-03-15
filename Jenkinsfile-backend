@@ -42,12 +42,6 @@ tools {
             }
         }
 
-        stage('Trigger Backend Deployment on Render') {
-            steps {
-                script {
-                    sh "curl -X POST ${BACKEND_DEPLOY_HOOK} -H 'Authorization: Bearer ${RENDER_API_KEY}'"
-                }
-            }
-        }
+
     }
 }
