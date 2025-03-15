@@ -10,11 +10,19 @@ pipeline {
 
     stages {
         stage('Checkout Code') {
-            steps {
-                git branch: 'main', url: 'https://github.com/your-username/backend.git'
-            }
-        }
-
+                    steps {
+                        script {
+                            checkout([
+                                $class: 'GitSCM',
+                                branches: [[name: '*/master']],
+                                userRemoteConfigs: [[
+                                    url: 'https://github.com/MichaelNkong/association-backend.git',
+                                    credentialsId: 'github-credentials'
+                                ]]
+                            ])
+                        }
+                    }
+                }
         stage('Build Backend Image') {
             steps {
                 script {
