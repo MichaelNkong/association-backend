@@ -37,11 +37,17 @@ tools {
             steps {
                 script {
                     sh "echo ${DOCKER_HUB_PASS} | docker login -u ${DOCKER_HUB_USER} --password-stdin"
-                    sh "docker push ${DOCKER_HUB_USER}/my-backend:latest"
+                    sh "docker push ${DOCKER_HUB_USER}/cultural-association-backend:latest"
                 }
             }
         }
 
-
+        stage('Trigger Backend Deployment on Render') {
+            steps {
+                script {
+                    sh "curl -X POST ${BACKEND_DEPLOY_HOOK} -H 'Authorization: Bearer ${RENDER_API_KEY}'"
+                }
+            }
+        }
     }
 }
