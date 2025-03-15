@@ -1,7 +1,7 @@
 pipeline {
     agent any
 tools {
-    git 'NONE'
+    git 'Default'
 }
     environment {
         DOCKER_HUB_USER = "your-dockerhub-username"
