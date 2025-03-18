@@ -20,7 +20,6 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "http://localhost:3000")
 public class AuthController {  // ✅ Class name corrected
     private final TokenBlacklistService tokenBlacklistService;
     private final UserRepository userRepository;

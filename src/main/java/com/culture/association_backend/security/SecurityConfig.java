@@ -1,5 +1,6 @@
 package com.culture.association_backend.security;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -24,6 +25,8 @@ public class SecurityConfig {
 
     private final JwtUtil jwtUtil;
     private final UserDetailsService userDetailsService;
+    @Value("${frontend.url}")
+    private String frontend_url;
 
     public SecurityConfig(JwtUtil jwtUtil, UserDetailsService userDetailsService) {
         this.jwtUtil = jwtUtil;
@@ -60,7 +63,7 @@ public class SecurityConfig {
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
-        config.addAllowedOrigin("http://localhost:3000");  // Frontend URL
+        config.addAllowedOrigin(frontend_url);  // Frontend URL
         config.addAllowedMethod("POST");
         config.addAllowedMethod("GET");
         config.addAllowedMethod("PUT");
