@@ -1,7 +1,7 @@
 pipeline {
     agent any
 tools {
-    docker 'DOCKER_HOME'
+    dockerTool 'DOCKER_HOME'
     git 'Default'
     maven 'Maven_3'
 }
