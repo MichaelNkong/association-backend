@@ -1,7 +1,7 @@
 pipeline {
     agent any
 tools {
-    git 'Default',
+    git 'Default'
     maven 'Maven_3'
 }
     environment {
