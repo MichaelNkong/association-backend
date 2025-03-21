@@ -5,7 +5,9 @@ FROM openjdk:21
 WORKDIR /app
 
 # Copy the built JAR file into the container
-COPY target/*.jar app.jar
+COPY target/association-backend-0.0.1-SNAPSHOT.jar app.jar
+
+
 
 # Run the application
 CMD ["java", "-jar", "app.jar"]

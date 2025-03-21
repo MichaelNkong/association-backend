@@ -1,5 +1,5 @@
-target/
-*.jar
+.idea
 *.class
 *.log
+*.env
 node_modules/
