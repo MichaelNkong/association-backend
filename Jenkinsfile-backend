@@ -5,8 +5,8 @@ pipeline {
         PATH = "C:\\Program Files\\Docker\\Docker\\resources\\bin;${env.PATH}"
         DOCKER_HUB_USER = "michaelnkong"
         DOCKER_HUB_PASS = "HoMoZea4722%?"
-        RENDER_API_KEY = "your-render-api-key"
-        BACKEND_DEPLOY_HOOK = "https://api.render.com/deploy/srv-backend-id"
+        RENDER_API_KEY = "rnd_khRDdc5JDqJyZh1p1D7hQmaqfqkx"
+        BACKEND_DEPLOY_HOOK = "https://api.render.com/deploy/srv-cvarm1vnoe9s73fek1qg?key=yq8p2SowWSs"
     }
 
     tools {
@@ -49,6 +49,17 @@ pipeline {
                     sh "docker push ${DOCKER_HUB_USER}/cultural-association-backend:latest"
                 }
             }
+        }
+        stage('Deploy to Render') {
+                    steps {
+                        script {
+                            sh """
+                                curl -X POST ${BACKEND_DEPLOY_HOOK} \\
+                                -H "Authorization: Bearer ${RENDER_API_KEY}" \\
+                                -H "Content-Type: application/json"
+                            """
+                        }
+                    }
         }
     }
 }
