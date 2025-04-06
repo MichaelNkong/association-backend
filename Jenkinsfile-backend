@@ -1,7 +1,9 @@
 pipeline {
     agent any
+     environment {
+            PATH = "C:\\Program Files\\Docker\\Docker\\resources\\bin;${env.PATH}"
+        }
 tools {
-    dockerTool 'DOCKER_HOME'
     git 'Default'
     maven 'Maven_3'
 }
@@ -32,7 +34,13 @@ tools {
                       sh "mvn clean package -DskipTests"
                   }
               }
-
+stages {
+        stage('Check Docker') {
+            steps {
+                bat 'where docker'
+                bat 'docker --version'
+            }
+        }
               stage('Build Docker Image') {
                   steps {
                       sh "docker build -t ${DOCKER_HUB_USER}/cultural-association-backend:latest ."
