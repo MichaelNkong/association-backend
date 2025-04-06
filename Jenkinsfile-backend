@@ -1,57 +1,61 @@
 pipeline {
     agent any
-     environment {
-            PATH = "C:\\Program Files\\Docker\\Docker\\resources\\bin;${env.PATH}"
-        }
-tools {
-    git 'Default'
-    maven 'Maven_3'
-}
+
     environment {
+        PATH = "C:\\Program Files\\Docker\\Docker\\resources\\bin;${env.PATH}"
         DOCKER_HUB_USER = "michaelnkong"
         DOCKER_HUB_PASS = "HoMoZea4722%?"
         RENDER_API_KEY = "your-render-api-key"
         BACKEND_DEPLOY_HOOK = "https://api.render.com/deploy/srv-backend-id"
     }
 
+    tools {
+        git 'Default'
+        maven 'Maven_3'
+    }
+
     stages {
         stage('Checkout Code') {
-                    steps {
-                        script {
-                            checkout([
-                                $class: 'GitSCM',
-                                branches: [[name: '*/master']],
-                                userRemoteConfigs: [[
-                                    url: 'https://github.com/MichaelNkong/association-backend.git',
-                                    credentialsId: 'github-credentials'
-                                ]]
-                            ])
-                        }
-                    }
+            steps {
+                script {
+                    checkout([
+                        $class: 'GitSCM',
+                        branches: [[name: '*/master']],
+                        userRemoteConfigs: [[
+                            url: 'https://github.com/MichaelNkong/association-backend.git',
+                            credentialsId: 'github-credentials'
+                        ]]
+                    ])
                 }
-       stage('Build Backend') {
-                  steps {
-                      sh "mvn clean package -DskipTests"
-                  }
-              }
-stages {
+            }
+        }
 
-              stage('Build Docker Image') {
-                  steps {
-                      sh "docker build -t ${DOCKER_HUB_USER}/cultural-association-backend:latest ."
-                  }
-              }
+        stage('Build Backend') {
+            steps {
+                sh "mvn clean package -DskipTests"
+            }
+        }
 
+        stage('Check Docker') {
+            steps {
+                bat 'where docker'
+                bat 'docker --version'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                sh "docker build -t ${DOCKER_HUB_USER}/cultural-association-backend:latest ."
+            }
+        }
 
         stage('Push Docker Image') {
-                    steps {
-                        script {
-                            sh "echo ${DOCKER_HUB_PASS} | docker login -u ${DOCKER_HUB_USER} --password-stdin"
-                            sh "docker push ${DOCKER_HUB_USER}/cultural-association-backend:latest"
-                        }
-                    }
+            steps {
+                script {
+                    sh "echo ${DOCKER_HUB_PASS} | docker login -u ${DOCKER_HUB_USER} --password-stdin"
+                    sh "docker push ${DOCKER_HUB_USER}/cultural-association-backend:latest"
                 }
-
-
+            }
+        }
     }
 }
