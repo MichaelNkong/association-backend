@@ -13,7 +13,6 @@ pipeline {
         git 'Default'
         maven 'Maven_3'
     }
-
     stages {
         stage('Checkout Code') {
             steps {
@@ -41,7 +40,6 @@ pipeline {
                 sh "docker build -t ${DOCKER_HUB_USER}/cultural-association-backend:latest ."
             }
         }
-
         stage('Push Docker Image') {
             steps {
                 script {
