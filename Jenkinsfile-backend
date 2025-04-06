@@ -35,19 +35,6 @@ pipeline {
                 sh "mvn clean package -DskipTests"
             }
         }
-       stage('Debug Env') {
-           steps {
-               bat 'echo %PATH%'
-               bat 'where cmd'
-               bat 'where docker'
-           }
-       }
-        stage('Check Docker') {
-            steps {
-                bat 'where docker'
-                bat 'docker --version'
-            }
-        }
 
         stage('Build Docker Image') {
             steps {
