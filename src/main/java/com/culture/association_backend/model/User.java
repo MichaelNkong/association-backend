@@ -26,7 +26,8 @@ public class User{
     @Column(nullable = false)
     private String password;
 
-
+    @Column(nullable = true)
+    private String is_active;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
