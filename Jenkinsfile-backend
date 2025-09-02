@@ -1,6 +1,9 @@
 pipeline {
     agent any
-
+  triggers {
+        // Check for changes every 5 minutes
+        pollSCM('H/5 * * * *')
+    }
     environment {
         PATH = "C:\\Program Files\\Docker\\Docker\\resources\\bin;${env.PATH}"
         DOCKER_HUB_USER = "michaelnkong"
